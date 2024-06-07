@@ -1,0 +1,31 @@
+{
+  "name": "webscraping",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-test": "nodemon b.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "axios-retry": "^4.3.0",
+    "body-parser": "^1.20.2",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "esm": "^3.2.25",
+    "express": "^4.19.2",
+    "jsdom": "^24.0.0",
+    "jsondom": "^0.4.1",
+    "node-fetch": "^3.3.2",
+    "nodemon": "^3.1.1",
+    "pixelmatch": "^5.3.0",
+    "puppeteer": "^22.9.0",
+    "qs": "^6.12.1",
+    "request": "^2.88.2",
+    "resemblejs": "^5.0.0",
+    "sharp": "^0.33.4"
+  }
+}
