@@ -3,10 +3,7 @@ const axios = require('axios');
 const app = express();
 const cors = require('cors');
 const qs = require('qs');
-const port = 3000;
-const dotenv =  require("dotenv")
-
-dotenv.load()
+const port = 4000;
 
 app.use(express.json());
 
@@ -146,6 +143,10 @@ app.post('/fetch-data', async (req, res) => {
         console.error('Error config:', error.config);
     }
 });
+
+
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
