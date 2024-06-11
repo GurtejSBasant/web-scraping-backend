@@ -7,6 +7,11 @@ const port = 4400;
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    res.setHeader('Referrer-Policy', 'no-referrer-when-downgrade');
+    next();
+});
+
 app.use(cors());
 
 app.post('/algolia', async (req, res) => {
