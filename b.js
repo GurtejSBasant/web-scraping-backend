@@ -11,15 +11,11 @@ app.use((req, res, next) => {
     res.setHeader('Referrer-Policy', 'no-referrer-when-downgrade');
     next();
 });
-const corsOptions = {
-    origin: '*', // Allow requests from any origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specified methods
-    allowedHeaders: 'Content-Type', // Allow specified headers
-};
+
+// Use CORS middleware without any options
+app.use(cors());
 
 
-// Use CORS middleware with the specified options
-app.use(cors(corsOptions));
 
 app.post('/algolia', async (req, res) => {
     try {
