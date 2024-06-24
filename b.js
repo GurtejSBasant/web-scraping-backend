@@ -8,8 +8,8 @@ const port = 4400;
 app.use(express.json());
 
 
-  const corsOptions = {
-    origin: '*', // Allow requests from any origin
+const corsOptions = {
+    origin: 'https://siteseeker.netlify.app/', // Allow requests from any origin
     methods: 'POST, GET, OPTIONS, PUT, DELETE', // Allow specified methods
     allowedHeaders: 'Content-Type', // Allow specified headers
 };
@@ -17,6 +17,18 @@ app.use(express.json());
 // Use CORS middleware with the specified options
 app.use(cors(corsOptions));
 
+app.use(cors(corsOptions));
+app.use(bodyParser.json({
+    verify: (req, res, buf, encoding) => {
+        try {
+            console.log(buf.toString(encoding));
+            JSON.parse(buf.toString(encoding)); // This will throw an error if the JSON is invalid
+        } catch (e) {
+            res.status(400).send({ error: 'Invalid JSON' });
+            throw e;
+        }
+    }
+}));
 
 
 app.post('/algolia', async (req, res) => {
