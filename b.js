@@ -162,55 +162,7 @@ app.post('/fetch-data', async (req, res) => {
     }
 });
 
-// OpenAI API key
-const OPENAI_API_KEY = 'sk-proj-Tu21PCSHPwR7pzdWmE3qT3BlbkFJUTAwnrpayVaaMvLcXDH1';
 
-// Function to generate email using OpenAI
-async function generateEmail(personDetails) {
-    try {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: "gpt-3.5-turbo",
-            messages: [
-                {"role": "system", "content": "You are a human writing a friendly and professional email."},
-                {"role": "system", "content": `The email is intended to connect with ${personDetails.person.name} from ${personDetails.person.organization.name}.`},
-                {"role": "user", "content": "Please write an authentic, friendly, and human-like email on behalf of the Marketing Manager of SheThink to connect with them. Mention that we noticed many open job profiles from their company and emphasize that SheThink can help find the correct candidates quickly."}
-            ],
-            max_tokens: 250,
-            temperature: 0.7
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENAI_API_KEY}`
-            }
-        });
-
-        let emailContent = response.data.choices[0].message.content.trim();
-        // Replace newline characters with spaces
-        emailContent = emailContent.replace(/\n/g, ' ');
-        // Replace placeholders with actual names
-        emailContent = emailContent.replace('[Your Name]', 'Chris M.'); // Replace [Your Name] with the Marketing Manager's name
-        emailContent = emailContent.replace('Wally', personDetails.person.name); // Replace Wally with the person's name
-
-        // Add the innovative line about SheThink's hiring assistance
-        emailContent += ` I wanted to reach out to you regarding the numerous open job profiles I noticed at your company. At SheThink, we specialize in easing the hiring process by efficiently finding suitable candidates for various roles. With our advanced technology and dedicated team, we can assist you in filling these positions in no time. Let's discuss how we can collaborate to streamline your hiring process and find the best talent for your team.`;
-
-        return emailContent;
-    } catch (error) {
-        console.error('Error generating email:', error.response ? error.response.data : error.message);
-        throw error;
-    }
-}
-
-// API endpoint to generate email
-app.post('/generate-email', async (req, res) => {
-    try {
-        const personDetails = req.body;
-        const email = await generateEmail(personDetails);
-        res.json({ email });
-    } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
 
 
 
