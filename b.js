@@ -7,23 +7,6 @@ const port = 4400;
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-    res.setHeader('Referrer-Policy', 'no-referrer-when-downgrade');
-    next();
-});
-       
-
-
-
-
-
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://siteseeker.netlify.app/');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-  });
 
   const corsOptions = {
     origin: '*', // Allow requests from any origin
