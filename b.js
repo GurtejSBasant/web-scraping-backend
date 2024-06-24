@@ -25,8 +25,14 @@ app.use((req, res, next) => {
     next();
   });
 
-// Use CORS middleware without any options
-app.use(cors());
+  const corsOptions = {
+    origin: '*', // Allow requests from any origin
+    methods: 'POST, GET, OPTIONS, PUT, DELETE', // Allow specified methods
+    allowedHeaders: 'Content-Type', // Allow specified headers
+};
+
+// Use CORS middleware with the specified options
+app.use(cors(corsOptions));
 
 
 
