@@ -11,6 +11,19 @@ app.use((req, res, next) => {
     res.setHeader('Referrer-Policy', 'no-referrer-when-downgrade');
     next();
 });
+       
+
+
+
+
+
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://siteseeker.netlify.app/');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  });
 
 // Use CORS middleware without any options
 app.use(cors());
@@ -99,6 +112,8 @@ app.post('/algolia', async (req, res) => {
 app.post('/fetch-data', async (req, res) => {
     try {
 
+        console.log("req.body.companiesId",req.body)
+
         const companiesId = req.body.companiesId
         // Payload with the ids
         const payload = {
@@ -153,6 +168,8 @@ app.post('/fetch-data', async (req, res) => {
 });
 
 
+// changes removed 
+ 
 
 
 
