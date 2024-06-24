@@ -9,7 +9,7 @@ app.use(express.json());
 
 
 const corsOptions = {
-    origin: 'https://siteseeker.netlify.app/', // Allow requests from any origin
+    origin: '*', // Allow requests from any origin
     methods: 'POST, GET, OPTIONS, PUT, DELETE', // Allow specified methods
     allowedHeaders: 'Content-Type', // Allow specified headers
 };
