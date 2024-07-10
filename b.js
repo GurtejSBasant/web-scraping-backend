@@ -168,8 +168,61 @@ app.post('/fetch-data', async (req, res) => {
     }
 });
 
+app.post('/fetch-employees', async (req, res) => {
+    const { api_key, q_organization_domains, position_title, person_seniorities } = req.body;
 
-// changes removed 
+    try {
+        const response = await axios.post('https://api.apollo.io/v1/mixed_people/search', {
+            api_key,
+            q_organization_domains,
+            position_title,
+            person_seniorities,
+            page: 1,
+            limit: 100
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+            }
+        });
+
+        if (response.status === 200) {
+            res.status(200).json(response.data);
+        } else {
+            res.status(response.status).send(`Failed to fetch details: ${response.status} - ${response.statusText}`);
+        }
+    } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
+});
+
+app.post('/fetch-employees-emails', async (req, res) => {
+    const { api_key, first_name, last_name, organization_name, domain } = req.body;
+
+    try {
+        const response = await axios.post('https://api.apollo.io/v1/people/match', {
+            api_key,
+            first_name,
+            last_name,
+            organization_name,
+            domain,
+            reveal_personal_emails: true
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+            }
+        });
+
+        if (response.status === 200) {
+            res.status(200).json(response.data);
+        } else {
+            res.status(response.status).send(`Failed to fetch details: ${response.status} - ${response.statusText}`);
+        }
+    } catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
+});
  
 
 
