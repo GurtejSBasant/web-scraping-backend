@@ -36,7 +36,7 @@ app.use(bodyParser.json({
         }
     }
 }));
-
+ 
 
 app.post('/algolia', async (req, res) => {
     try {
