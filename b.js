@@ -6,6 +6,13 @@ const qs = require('qs');
 const port = 4400;
 const bodyParser = require('body-parser');
 app.use(express.json());
+const dotenv = require("dotenv")
+
+
+dotenv.config()
+
+
+console.log("key:",)
 
 
 const corsOptions = {
@@ -169,7 +176,9 @@ app.post('/fetch-data', async (req, res) => {
 });
 
 app.post('/fetch-employees', async (req, res) => {
-    const { api_key, q_organization_domains, position_title, person_seniorities } = req.body;
+    const {  q_organization_domains, position_title, person_seniorities } = req.body;
+
+    api_key = process.env.Apollo_api_key
 
     try {
         const response = await axios.post('https://api.apollo.io/v1/mixed_people/search', {
@@ -197,8 +206,9 @@ app.post('/fetch-employees', async (req, res) => {
 });
 
 app.post('/fetch-employees-emails', async (req, res) => {
-    const { api_key, first_name, last_name, organization_name, domain } = req.body;
+    const { first_name, last_name, organization_name, domain } = req.body;
 
+      api_key = process.env.Apollo_api_key
     try {
         const response = await axios.post('https://api.apollo.io/v1/people/match', {
             api_key,
@@ -223,6 +233,40 @@ app.post('/fetch-employees-emails', async (req, res) => {
         res.status(500).send(`Error: ${error.message}`);
     }
 });
+
+app.post('/api/search', async (req, res) => {
+    const url = 'https://api.apollo.io/api/v1/mixed_companies/search';
+    
+    // Parameters from the request body
+    const { city, country, numEmployeesRanges, keywordTags, department, page = 1, perPage = 10 } = req.body;
+  
+    const params = {
+      api_key: 'ppKeBXq42XUYmR7o6NyW6Q',
+      page: page,
+      per_page: perPage,
+      organization_num_employees_ranges: numEmployeesRanges || ["20,500"],
+      q_organization_keyword_tags: keywordTags || ["technologies", "recruitment", "sales", "managers"]
+    };
+  
+    // Add country and city to locationFilters if provided
+    if (country || city) {
+      params.organization_locations = [];
+      if (country) {
+        params.organization_locations.push(country);
+      }
+      if (city) {
+        params.organization_locations.push(city);
+      }
+    }
+  
+    try {
+      const response = await axios.post(url, params);
+      res.json(response.data);
+    } catch (error) {
+      console.error('Error fetching data from Apollo API:', error);
+      res.status(500).json({ error: 'Error fetching data from Apollo API' });
+    }
+  });
  
 
 
