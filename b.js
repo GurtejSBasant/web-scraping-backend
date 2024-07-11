@@ -6,6 +6,13 @@ const qs = require('qs');
 const port = 4400;
 const bodyParser = require('body-parser');
 app.use(express.json());
+const dotenv = require("dotenv")
+
+
+dotenv.config()
+
+
+console.log("key:",)
 
 
 const corsOptions = {
@@ -169,7 +176,9 @@ app.post('/fetch-data', async (req, res) => {
 });
 
 app.post('/fetch-employees', async (req, res) => {
-    const { api_key, q_organization_domains, position_title, person_seniorities } = req.body;
+    const {  q_organization_domains, position_title, person_seniorities } = req.body;
+
+    api_key = process.env.Apollo_api_key
 
     try {
         const response = await axios.post('https://api.apollo.io/v1/mixed_people/search', {
@@ -197,8 +206,9 @@ app.post('/fetch-employees', async (req, res) => {
 });
 
 app.post('/fetch-employees-emails', async (req, res) => {
-    const { api_key, first_name, last_name, organization_name, domain } = req.body;
+    const { first_name, last_name, organization_name, domain } = req.body;
 
+      api_key = process.env.Apollo_api_key
     try {
         const response = await axios.post('https://api.apollo.io/v1/people/match', {
             api_key,
